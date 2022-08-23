@@ -1,3 +1,6 @@
+//init class ui
+const ui = new UI();
+
 const firebaseConfig = {
     apiKey: "AIzaSyCQ9NyJtK2i6eFVucweVF5KszbuNCj0k7U",
     authDomain: "product-store-d83f7.firebaseapp.com",
@@ -16,7 +19,7 @@ const firebaseConfig = {
   db.collection("products").get()
   .then((docs) => {
     docs.forEach(doc => {
-        console.log(doc.data());
+        ui.paintUI(doc.data());
     })
 
   })
