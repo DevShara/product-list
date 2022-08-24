@@ -4,7 +4,7 @@ class UI {
     }
 
     paintUI(data){
-        console.log(data);
+        // console.log(data);
         const row = `
          <tr>
             <td>${data.product_name}</td>

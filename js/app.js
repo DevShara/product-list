@@ -24,25 +24,26 @@ const firebaseConfig = {
   // get product from firebase
 
   products.onSnapshot(docs => {
-    if(docs.empty()){
-      docs.forEach(doc => {
-        ui.paintUI(doc.data());
-      })
-    }else{
-      console.log('EMPTY!');
-    }
-    
+    docs.forEach(doc => {
+      ui.paintUI(doc.data())
+    })
   })
 
 
 
   //search products
   function searchProducts(){
-
+    const searchQuery = +productSearchBar.value
+    console.log(searchQuery)
     //get search result from firebase
-    products.get()
+    products.where("quantity", ">=", searchQuery)
+    .onSnapshot(docs => {
+      docs.forEach(doc => {
+        console.log(doc.data(), searchQuery)
+      })
+    })
 
-    console.log(productSearchBar.value);
+    // console.log(productSearchBar.value);
   }
 
   productSearchBar.addEventListener('keyup', searchProducts);
