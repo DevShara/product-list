@@ -1,6 +1,9 @@
 //init class ui
 const ui = new UI();
 
+const productSearchBar = document.querySelector("#product-search-bar");
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyCQ9NyJtK2i6eFVucweVF5KszbuNCj0k7U",
     authDomain: "product-store-d83f7.firebaseapp.com",
@@ -16,13 +19,30 @@ const firebaseConfig = {
   //init firestore
   const db = firebase.firestore();
 
-  db.collection("products").get()
-  .then((docs) => {
-    docs.forEach(doc => {
-        ui.paintUI(doc.data());
-    })
+  const products = db.collection("products");
 
+  // get product from firebase
+
+  products.onSnapshot(docs => {
+    if(docs.empty()){
+      docs.forEach(doc => {
+        ui.paintUI(doc.data());
+      })
+    }else{
+      console.log('EMPTY!');
+    }
+    
   })
-  .catch(err => {
-    console.log(err);
-  })
+
+
+
+  //search products
+  function searchProducts(){
+
+    //get search result from firebase
+    products.get()
+
+    console.log(productSearchBar.value);
+  }
+
+  productSearchBar.addEventListener('keyup', searchProducts);

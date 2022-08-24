@@ -7,10 +7,10 @@ class UI {
         console.log(data);
         const row = `
          <tr>
-            <td>${data.Name}</td>
-            <td>${data.Price}</td>
-            <td>${data.Quantity}</td>
-            <td>${data.Total_Amount}</td>
+            <td>${data.product_name}</td>
+            <td>${data.price}</td>
+            <td>${data.quantity}</td>
+            <td>${data.total_amount}</td>
             <td><i class="fa fa-times" aria-hidden="true"></i></td>
         </tr>
         `
