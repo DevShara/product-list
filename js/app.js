@@ -33,10 +33,9 @@ const firebaseConfig = {
 
   //search products
   function searchProducts(){
-    const searchQuery = +productSearchBar.value
-    console.log(searchQuery)
+    const searchQuery = productSearchBar.value
     //get search result from firebase
-    products.where("quantity", ">=", searchQuery)
+    products.where("product_tags", "array-contains", searchQuery)
     .onSnapshot(docs => {
       docs.forEach(doc => {
         console.log(doc.data(), searchQuery)
