@@ -2,6 +2,8 @@
 const ui = new UI();
 
 const productSearchBar = document.querySelector("#product-search-bar");
+const addProductModalBtn = document.querySelector("#addProductModalBtn");
+
 
 
 const firebaseConfig = {
@@ -22,12 +24,43 @@ const firebaseConfig = {
   const products = db.collection("products");
 
   // get product from firebase
-
   products.onSnapshot(docs => {
+    const products = []
     docs.forEach(doc => {
-      ui.paintUI(doc.data())
+        products.push(doc.data())
+        ui.paintUI(products)
     })
-  })
+  });
+
+  
+
+
+
+  //Open add product modal
+  function openAddProduct(){
+    ui.openModel(modals.addProduct);
+    let addProductBtn = document.querySelector("#addProductBtn");
+    let addProductForm = document.querySelector("#addProductForm");
+
+    //Add product
+    function addProduct(){
+        const product = {}
+
+        product.product_name = addProductForm.product_name.value;
+        product.product_price = addProductForm.product_price.value;
+        product.product_quantity = parseInt(addProductForm.product_quantity.value);
+
+        //Add data to products table in Firebase
+        products.add(product);
+        console.log(product)
+
+        
+    }
+
+    addProductBtn.addEventListener("click", addProduct);
+ 
+  }
+
 
 
 
@@ -46,4 +79,6 @@ const firebaseConfig = {
   }
 
   productSearchBar.addEventListener('keyup', searchProducts);
+  addProductModalBtn.addEventListener("click", openAddProduct);
+  
 
