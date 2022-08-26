@@ -46,3 +46,4 @@ const firebaseConfig = {
   }
 
   productSearchBar.addEventListener('keyup', searchProducts);
+
