@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/bootstrap.css">
     <link rel="stylesheet" href="style/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
     <script src="js/bootstrap.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js" defer></script>
+    <script src="js/ui.js" defer></script>
     <script src="js/app.js" defer></script>
     <title>Product Store</title>
 </head>
@@ -68,7 +73,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Products</button>
                   </div>
                   <div class="col-8">
-                    <input class=" form-control d-inline " type="search" placeholder="Search" aria-label="Search" style="height:100%;">
+                    <input class=" form-control d-inline " id="product-search-bar" type="search" placeholder="Search" aria-label="Search" style="height:100%;">
                   </div>
                 </div><!--form-row-->    
           </div><!--column 1-->
@@ -83,6 +88,23 @@
         </div><!--row-->
       </div><!--container-->
     </div><!--grey line-->
+
+    <div class="container">
+      <table class="table table-sm" id="products-table">
+        <thead>
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </div>
 
 
    
