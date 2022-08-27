@@ -1,19 +1,40 @@
 class UI {
     constructor(){
-        this.product_table = document.querySelector("#products-table tbody");
+        this.product_table = document.querySelector("#productsTable tbody");
+        this.addProduct;
+        this.data;
     }
 
-    paintUI(data){
-        // console.log(data);
-        const row = `
-         <tr>
-            <td>${data.product_name}</td>
-            <td>${data.price}</td>
-            <td>${data.quantity}</td>
-            <td>${data.total_amount}</td>
+    paintUI(products){
+        console.log(products)
+        let tbody = '';
+        products.forEach(item =>{
+            tbody += `
+         <tr data-id=${item.product_id}>
+            <td><button type="button" class="btn viewProductModalBtn " data-toggle="modal" data-target="#theModal">${item.product_name}</button></td>
+            <td>${item.product_price}</td>
+            <td>${item.product_quantity}</td>
+            <td>${item.product_price * item.product_quantity}</td>
             <td><i class="fa fa-times" aria-hidden="true"></i></td>
         </tr>
         `
-        this.product_table.innerHTML = row;
+        })
+      
+        this.product_table.innerHTML = tbody;
     }
+
+    openModel(template, view){ 
+        // const data = {
+        //     name : "Joe",
+        //     age: 36,
+        //     occupation : "Web Developer"  
+        // }
+        
+           var output = Mustache.render(template, view);
+           document.getElementById('modal-content').innerHTML = output;
+   
+    }
+    
+    
+    
 }
