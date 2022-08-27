@@ -81,7 +81,7 @@
     </div><!--grey line-->
 
     <div class="container">
-      <table class="table table-sm" id="products-table">
+      <table class="table table-sm" id="productsTable">
         <thead>
           <tr>
             <th scope="col">Product Name</th>
@@ -92,7 +92,16 @@
           </tr>
         </thead>
         <tbody>
-          
+         
+         <tr data-id=${item.product_id}>
+            <td><button type="button" class="btn viewProductModalBtn " data-toggle="modal" data-target="#theModal">${item.product_name}</button></td>
+            <td>${item.product_price}</td>
+            <td>${item.product_quantity}</td>
+            <td>${item.product_price * item.product_quantity}</td>
+            <td><i class="fa fa-times" aria-hidden="true"></i></td>
+        </tr>
+        
+        
         </tbody>
       </table>
     </div>
