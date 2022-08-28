@@ -69,25 +69,19 @@ const firebaseConfig = {
 
   //Open view product modal
   function openViewProduct(e){
-
+    
     const target = e.target
 
     if(target.classList.contains("viewProductModalBtn")){
 
       const rowId = target.parentElement.parentElement.dataset.id;
-    
-      // console.log(productsArray)
-      // console.log(productRows)
 
       productsArray.forEach(product => {
         if(product.product_id === rowId){
           ui.openModel(modals.viewProduct, product);
         }
-
       })
-
     }
-  
   }
 
 
@@ -96,34 +90,31 @@ const firebaseConfig = {
     const searchQuery = productSearchBar.value.toLowerCase()
     //get search result from firebase
 
-    if(searchQuery.length === 0){
-      getProducts();
-    }else{
-      products.where("product_tags", "array-contains", "powder")
-      .get()
-      .then(snapshot => {
-        console.log(snapshot.docs.length )
-        snapshot.forEach(docs => {
-          productsArray = docs.data()
-        
-        })
+    if(searchQuery.length > 0){
+      console.log("NOT EMPTY")
+      products.where("product_tags", "array-contains", searchQuery)
+      .onSnapshot(snapshot => {
+
+        filteredArray = [];
+
+        if(snapshot.docs.length > 0){
+          snapshot.forEach(doc =>{
+            filteredArray.push({product_id:doc.id, ...doc.data()});
+            ui.paintUI(filteredArray)
+          })
+
+        }else{
+          getProducts();
+        }
       })
 
-      // .onSnapshot(docs => {
-      //   productsArray = [];
-      //   console.log(docs.length)
-      //   docs.forEach((doc) => { 
-      //     // console.log(doc, arr)       
-      //       filteredArray.push({product_id:doc.id, ...doc.data()})
-      //       ui.paintUI(filteredArray)
+    }else{
+      getProducts()
 
-      //   }) 
-      // })
     }
 
 
-    // console.log(productSearchBar.value);
-  }
+  }//searchProducts()
 
   getProducts();
   productSearchBar.addEventListener('keyup', searchProducts);
