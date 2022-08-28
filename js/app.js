@@ -24,20 +24,20 @@ const firebaseConfig = {
   const db = firebase.firestore();
 
   const products = db.collection("products");
-  let productsArray = []
+  let productsArray = [];
+  let filteredArray = [];
 
   // get product from firebase
-  products.onSnapshot(docs => {
-    productsArray = [];
-    docs.forEach(doc => {
-      
-      productsArray.push({product_id:doc.id, ...doc.data()})
-        ui.paintUI(productsArray)
-    })
-  });
-
-  
-
+  function getProducts(){
+    products.onSnapshot(docs => {
+      productsArray = [];
+      docs.forEach(doc => {
+        
+        productsArray.push({product_id:doc.id, ...doc.data()})
+          ui.paintUI(productsArray)
+      })
+    });
+  }
 
 
   //Open add product modal
@@ -51,9 +51,10 @@ const firebaseConfig = {
     function addProduct(){
         const product = {}
 
-        product.product_name = addProductForm.product_name.value;
+        product.product_name = addProductForm.product_name.value.toLowerCase();
         product.product_price = addProductForm.product_price.value;
         product.product_quantity = parseInt(addProductForm.product_quantity.value);
+        product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
 
         //Add data to products table in Firebase
         products.add(product);
@@ -84,38 +85,47 @@ const firebaseConfig = {
         }
 
       })
-      
 
-
-      // const products = {
-      //   name: "Turmeric powder 100g",
-      //   price: 90,
-      //   quantity: 1500
-      // }
-
-      
     }
-
-   
+  
   }
-
-
 
 
   //search products
   function searchProducts(){
-    const searchQuery = productSearchBar.value
+    const searchQuery = productSearchBar.value.toLowerCase()
     //get search result from firebase
-    products.where("product_tags", "array-contains", searchQuery)
-    .onSnapshot(docs => {
-      docs.forEach(doc => {
-        // console.log(doc.data(), searchQuery)
+
+    if(searchQuery.length === 0){
+      getProducts();
+    }else{
+      products.where("product_tags", "array-contains", "powder")
+      .get()
+      .then(snapshot => {
+        console.log(snapshot.docs.length )
+        snapshot.forEach(docs => {
+          productsArray = docs.data()
+        
+        })
       })
-    })
+
+      // .onSnapshot(docs => {
+      //   productsArray = [];
+      //   console.log(docs.length)
+      //   docs.forEach((doc) => { 
+      //     // console.log(doc, arr)       
+      //       filteredArray.push({product_id:doc.id, ...doc.data()})
+      //       ui.paintUI(filteredArray)
+
+      //   }) 
+      // })
+    }
+
 
     // console.log(productSearchBar.value);
   }
 
+  getProducts();
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct)

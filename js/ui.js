@@ -6,7 +6,7 @@ class UI {
     }
 
     paintUI(products){
-        console.log(products)
+        // console.log(products)
         let tbody = '';
         products.forEach(item =>{
             tbody += `
