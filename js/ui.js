@@ -12,10 +12,10 @@ class UI {
             tbody += `
          <tr data-id=${item.product_id}>
             <td><button type="button" class="btn viewProductModalBtn " data-toggle="modal" data-target="#theModal">${item.product_name}</button></td>
-            <td>${item.product_price}</td>
-            <td>${item.product_quantity}</td>
-            <td>${item.product_price * item.product_quantity}</td>
-            <td><i class="fa fa-times" aria-hidden="true"></i></td>
+            <td class="align-middle">${item.product_price}</td>
+            <td class="align-middle">${item.product_quantity}</td>
+            <td class="align-middle">${item.product_price * item.product_quantity}</td>
+            <td class="align-middle"><i class="fa fa-times" aria-hidden="true"></i></td>
         </tr>
         `
         })
@@ -33,8 +33,6 @@ class UI {
            var output = Mustache.render(template, view);
            document.getElementById('modal-content').innerHTML = output;
    
-    }
-    
-    
+    }    
     
 }

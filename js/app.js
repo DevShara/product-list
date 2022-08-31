@@ -44,29 +44,23 @@ const firebaseConfig = {
   //Open add product modal
   function openAddProduct(){
 
-    
-
     ui.openModal(modals.addProduct);
     let addProductBtn = document.querySelector("#addProductBtn");
     let addProductForm = document.querySelector("#addProductForm");
 
     //Add product
-    function addProduct(){
-        const product = {}
+    addProductBtn.addEventListener("click", () => {
+      const product = {}
 
-        product.product_name = addProductForm.product_name.value.toLowerCase();
-        product.product_price = addProductForm.product_price.value;
-        product.product_quantity = parseInt(addProductForm.product_quantity.value);
-        product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
+      product.product_name = addProductForm.product_name.value.toLowerCase();
+      product.product_price = addProductForm.product_price.value;
+      product.product_quantity = parseInt(addProductForm.product_quantity.value);
+      product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
 
-        //Add data to products table in Firebase
-        products.add(product); 
-        
-        // clearModal();
-  
-    }
+      //Add data to products table in Firebase
+      products.add(product); 
 
-    addProductBtn.addEventListener("click", addProduct);
+    });
 
   }
 
@@ -89,10 +83,39 @@ const firebaseConfig = {
   }
 
 
+  
+  
+
+
   //Open new sale modal
   function openMakeSale(){
-    console.log("make-sale")
     ui.openModal(modals.makeSale, productsArray);
+
+    const makeSaleBtn = document.querySelector('#makeSaleBtn');
+    
+    //Load product to select tag
+    ( () => {
+
+      const productSelect = document.querySelector('#productSelect');
+      let select = ''; 
+  
+      productsArray.forEach((product) => {
+        const option = `<option value=${product.product_id}>${product.product_name}</option>`
+        select += option;
+      });
+  
+      productSelect.innerHTML = select;
+
+    } )();
+
+
+    //Make sale
+    makeSaleBtn.addEventListener('click', () => {
+      
+    })
+
+
+    
   }
 
 
