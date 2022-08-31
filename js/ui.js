@@ -3,6 +3,7 @@ class UI {
         this.product_table = document.querySelector("#productsTable tbody");
         this.addProduct;
         this.data;
+        this.productSelect;
     }
 
     paintUI(products){
@@ -33,6 +34,19 @@ class UI {
            var output = Mustache.render(template, view);
            document.getElementById('modal-content').innerHTML = output;
    
-    }    
+    } 
+    
+    loadProducts (products){
+
+        this.productSelect = document.querySelector('#productSelect');
+        let select = ''; 
+  
+      products.forEach((product) => {
+        const option = `<option data-id=${product.product_id} value="${product.product_name}">${product.product_name}</option>`
+        select += option;
+      });
+  
+      productSelect.innerHTML = select;
+    }
     
 }

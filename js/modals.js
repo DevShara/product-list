@@ -56,8 +56,8 @@ const modals = {
                 <div class="modal-body">
                   <form>
                     <div class="form-group">
-                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>
-                      <select class="custom-select" id="productSelect"></select>
+                      <label class="my-1 mr-2" for="productSelect">Preference</label>
+                      <select name="product" class="custom-select" id="productSelect"></select>
                     </div>
 
                     <div class="form-group">

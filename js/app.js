@@ -91,27 +91,22 @@ const firebaseConfig = {
   function openMakeSale(){
     ui.openModal(modals.makeSale, productsArray);
 
+    const productSelect = document.querySelector('#productSelect');
     const makeSaleBtn = document.querySelector('#makeSaleBtn');
     
     //Load product to select tag
-    ( () => {
-
-      const productSelect = document.querySelector('#productSelect');
-      let select = ''; 
-  
-      productsArray.forEach((product) => {
-        const option = `<option value=${product.product_id}>${product.product_name}</option>`
-        select += option;
-      });
-  
-      productSelect.innerHTML = select;
-
-    } )();
-
+    ui.loadProducts(productsArray);
 
     //Make sale
-    makeSaleBtn.addEventListener('click', () => {
+    makeSaleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedProductName = productSelect.value;
+      const selectedProductId =  productSelect.id;
+
+      console.log(selectedProductId);
       
+      // products.doc()
+
     })
 
 
@@ -150,18 +145,6 @@ const firebaseConfig = {
 
   }//searchProducts()
 
-
-  //clear modal
-  // function clearModal(){
-  //   const modal = document.getElementById('modal-content');
-    
-  //   if(modal.innerHTML !== ''){
-  //     setTimeout(() => {
-        
-  //     }, 1000)
-      
-  //   }
-  // }
 
   //clear modal using jquery
   $('#theModal').on('hidden.bs.modal', function () {
