@@ -5,6 +5,7 @@ const productSearchBar = document.querySelector("#product-search-bar");
 const addProductModalBtn = document.querySelector("#addProductModalBtn");
 const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
 const productsTable = document.querySelector("#productsTable");
+const saleBtn = document.querySelector("#saleBtn");
 
 
 
@@ -43,7 +44,9 @@ const firebaseConfig = {
   //Open add product modal
   function openAddProduct(){
 
-    ui.openModel(modals.addProduct);
+    
+
+    ui.openModal(modals.addProduct);
     let addProductBtn = document.querySelector("#addProductBtn");
     let addProductForm = document.querySelector("#addProductForm");
 
@@ -57,13 +60,14 @@ const firebaseConfig = {
         product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
 
         //Add data to products table in Firebase
-        products.add(product);
-  
+        products.add(product); 
         
+        // clearModal();
+  
     }
 
     addProductBtn.addEventListener("click", addProduct);
- 
+
   }
 
 
@@ -78,10 +82,17 @@ const firebaseConfig = {
 
       productsArray.forEach(product => {
         if(product.product_id === rowId){
-          ui.openModel(modals.viewProduct, product);
+          ui.openModal(modals.viewProduct, product);
         }
       })
     }
+  }
+
+
+  //Open new sale modal
+  function openMakeSale(){
+    console.log("make-sale")
+    ui.openModal(modals.makeSale, productsArray);
   }
 
 
@@ -116,8 +127,28 @@ const firebaseConfig = {
 
   }//searchProducts()
 
+
+  //clear modal
+  // function clearModal(){
+  //   const modal = document.getElementById('modal-content');
+    
+  //   if(modal.innerHTML !== ''){
+  //     setTimeout(() => {
+        
+  //     }, 1000)
+      
+  //   }
+  // }
+
+  //clear modal using jquery
+  $('#theModal').on('hidden.bs.modal', function () {
+    const modal = document.getElementById('modal-content');
+    modal.innerHTML = '';
+});
+
   getProducts();
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
-  productsTable.addEventListener("click", openViewProduct)
+  productsTable.addEventListener("click", openViewProduct);
+  saleBtn.addEventListener("click", openMakeSale)
 

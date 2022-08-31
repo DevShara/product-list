@@ -43,9 +43,22 @@ const modals = {
                         <li class="list-group-item">Total Amount:{{product_price}}</li>
                       </ul>
                     </div>
-
+                    `,
+    makeSale: `  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{product_name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 
-                    `
+                <div class="modal-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Price:{{product_price}}</li>
+                    <li class="list-group-item">Quantity:{{product_quantity}}</li>
+                    <li class="list-group-item">Total Amount:{{product_price}}</li>
+                  </ul>
+                </div>
+                `
     
 
 }

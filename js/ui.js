@@ -23,7 +23,7 @@ class UI {
         this.product_table.innerHTML = tbody;
     }
 
-    openModel(template, view){ 
+    openModal(template, view){ 
         // const data = {
         //     name : "Joe",
         //     age: 36,
