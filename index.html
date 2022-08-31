@@ -71,8 +71,8 @@
     
           <div class="col-sm-3 ">
             <div class="row justify-content-center my-2 my-sm-0">
-              <button class="btn btn-outline-primary">NEW SALE</button>
-              <button class="btn btn-outline-primary">NEW PURCHASE</button>
+              <button class="btn btn-outline-primary" id="saleBtn" data-toggle="modal" data-target="#theModal">NEW SALE</button>
+              <button class="btn btn-outline-primary" id="PurchaseBtn">NEW PURCHASE</button>
             </div>
           </div><!--column 2-->
          
@@ -94,10 +94,10 @@
         <tbody>
          
          <tr data-id=${item.product_id}>
-            <td><button type="button" class="btn viewProductModalBtn " data-toggle="modal" data-target="#theModal">${item.product_name}</button></td>
-            <td>${item.product_price}</td>
-            <td>${item.product_quantity}</td>
-            <td>${item.product_price * item.product_quantity}</td>
+            <td><button type="button" class="btn viewProductModalBtn " data-toggle="modal" data-target="#theModal"></button></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><i class="fa fa-times" aria-hidden="true"></i></td>
         </tr>
         
