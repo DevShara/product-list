@@ -56,17 +56,17 @@ const modals = {
                 <div class="modal-body">
                   <form>
                     <div class="form-group">
-                      <label class="my-1 mr-2" for="productSelect">Preference</label>
+                      <label class="my-1 mr-2" for="productSelect">Product</label>
                       <select name="product" class="custom-select" id="productSelect"></select>
                     </div>
 
                     <div class="form-group">
-                      <label for="product_quantity">Product Quantity</label>
+                      <label for="product_quantity">Quantity</label>
                       <input type="text" class="form-control" id="product_quantity" placeholder="Product Quantity">  
                    </div> 
                  
                 
-                     <button type="submit" class="btn btn-primary my-1" id="makeSaleBtn">Make Sale</button>
+                     <button type="submit" class="btn btn-primary my-1" id="makeSaleBtn" data-dismiss="modal">Make Sale</button>
                 </form>
                 </div>
                 `

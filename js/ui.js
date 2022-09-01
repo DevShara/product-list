@@ -42,7 +42,7 @@ class UI {
         let select = ''; 
   
       products.forEach((product) => {
-        const option = `<option data-id=${product.product_id} value="${product.product_name}">${product.product_name}</option>`
+        const option = `<option value="${product.product_id}">${product.product_name}</option>`
         select += option;
       });
   

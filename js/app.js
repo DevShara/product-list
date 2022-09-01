@@ -93,7 +93,8 @@ const firebaseConfig = {
 
     const productSelect = document.querySelector('#productSelect');
     const makeSaleBtn = document.querySelector('#makeSaleBtn');
-    
+    const saleQtyInput =  document.querySelector('#product_quantity');
+
     //Load product to select tag
     ui.loadProducts(productsArray);
 
@@ -101,9 +102,25 @@ const firebaseConfig = {
     makeSaleBtn.addEventListener('click', (e) => {
       e.preventDefault();
       const selectedProductName = productSelect.value;
-      const selectedProductId =  productSelect.id;
+      let currentQty;
+      const saleQty = saleQtyInput.value;
+      let newQty;
 
-      console.log(selectedProductId);
+      productsArray.forEach(product => {
+        if(selectedProductName === product.product_id){
+          currentQty = product.product_quantity;
+        }
+      });
+
+      if(currentQty > saleQty){
+        newQty = currentQty - saleQty;
+        console.log(newQty)
+      }
+      
+
+      products.doc(selectedProductName).update({
+        product_quantity: newQty
+      })
       
       // products.doc()
 
