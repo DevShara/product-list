@@ -39,6 +39,7 @@ const firebaseConfig = {
       })
     });
   }
+  getProducts();
 
 
   //Open add product modal
@@ -83,10 +84,6 @@ const firebaseConfig = {
   }
 
 
-  
-  
-
-
   //Open new sale modal
   function openMakeSale(){
     ui.openModal(modals.makeSale, productsArray);
@@ -117,7 +114,6 @@ const firebaseConfig = {
         console.log(newQty)
       }
       
-
       products.doc(selectedProductName).update({
         product_quantity: newQty
       })
@@ -169,7 +165,7 @@ const firebaseConfig = {
     modal.innerHTML = '';
 });
 
-  getProducts();
+
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct);
