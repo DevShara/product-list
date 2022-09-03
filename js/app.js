@@ -49,20 +49,35 @@ const firebaseConfig = {
     let addProductBtn = document.querySelector("#addProductBtn");
     let addProductForm = document.querySelector("#addProductForm");
 
-    //Add product
-    addProductBtn.addEventListener("click", () => {
-      const product = {}
+    
+      //Add product
+      addProductBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-      product.product_name = addProductForm.product_name.value.toLowerCase();
-      product.product_price = addProductForm.product_price.value;
-      product.product_quantity = parseInt(addProductForm.product_quantity.value);
-      product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
+        const productName = addProductForm.product_name.value;
+        const productPrice = addProductForm.product_price.value;
+        const productQuantity = addProductForm.product_quantity.value;
 
-      //Add data to products table in Firebase
-      products.add(product); 
+        if(productName.length > 0 && productPrice.length > 0 && productQuantity.length > 0){
+          
+          const product = {}
 
-    });
+          product.product_name = addProductForm.product_name.value.toLowerCase();
+          product.product_price = addProductForm.product_price.value;
+          product.product_quantity = parseInt(addProductForm.product_quantity.value);
+          product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
+  
+          //Add data to products table in Firebase
+          products.add(product); 
 
+          addProductBtn.setAttribute("data-dismiss", "modal")
+         
+
+        }else{
+          ui.modalMessage("Please fill all the fields")
+        }
+      });
+   
   }
 
 
@@ -109,21 +124,27 @@ const firebaseConfig = {
         }
       });
 
-      if(currentQty > saleQty){
-        newQty = currentQty - saleQty;
-        console.log(newQty)
+      if(selectedProductName && saleQty.length > 0){
+
+        if(currentQty >= saleQty){
+          newQty = currentQty - saleQty;
+
+          products.doc(selectedProductName).update({
+            product_quantity: newQty
+          });
+
+          console.log(newQty);
+          makeSaleBtn.setAttribute("data-dismiss", "modal")
+        }else{
+          console.log('Product stock balance is not sufficient');
+          ui.modalMessage('Product stock balance is not sufficient');
+
+        }
+        
+      }else{
+        ui.modalMessage('Please fill all the fields');
       }
-      
-      products.doc(selectedProductName).update({
-        product_quantity: newQty
-      })
-      
-      // products.doc()
-
-    })
-
-
-    
+    })  
   }
 
 
@@ -155,16 +176,10 @@ const firebaseConfig = {
 
     }
 
-
   }//searchProducts()
 
-
   //clear modal using jquery
-  $('#theModal').on('hidden.bs.modal', function () {
-    const modal = document.getElementById('modal-content');
-    modal.innerHTML = '';
-});
-
+  ui.closeModal();
 
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);

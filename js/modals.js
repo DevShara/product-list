@@ -13,7 +13,7 @@ const modals = {
                                <form id="addProductForm">
                                  <div class="form-group">
                                    <label for="product_name">Product Name</label>
-                                   <input type="text" class="form-control" id="product_name" placeholder="Product Name">  
+                                   <input type="text" class="form-control" id="product_name" placeholder="Product Name" required>  
                                  </div>
                                  <div class="form-group">
                                    <label for="product_price">Product Price</label>
@@ -28,7 +28,7 @@ const modals = {
    
                              <div class="modal-footer">
                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                               <button type="button" class="btn btn-primary" id="addProductBtn" data-dismiss="modal">Add Product</button>
+                               <button type="button" class="btn btn-primary" id="addProductBtn">Add Product</button>
                              </div>
                              `,
     viewProduct: `  <div class="modal-header">
@@ -54,6 +54,8 @@ const modals = {
                 </div>
                 
                 <div class="modal-body">
+
+                
                   <form>
                     <div class="form-group">
                       <label class="my-1 mr-2" for="productSelect">Product</label>
@@ -66,7 +68,7 @@ const modals = {
                    </div> 
                  
                 
-                     <button type="submit" class="btn btn-primary my-1" id="makeSaleBtn" data-dismiss="modal">Make Sale</button>
+                     <button type="submit" class="btn btn-primary my-1" id="makeSaleBtn" >Make Sale</button>
                 </form>
                 </div>
                 `
