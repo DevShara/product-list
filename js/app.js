@@ -1,11 +1,7 @@
 //init class ui
 const ui = new UI();
 
-const productSearchBar = document.querySelector("#product-search-bar");
-const addProductModalBtn = document.querySelector("#addProductModalBtn");
-const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
-const productsTable = document.querySelector("#productsTable");
-const saleBtn = document.querySelector("#saleBtn");
+
 
 
 
@@ -40,6 +36,12 @@ const firebaseConfig = {
     });
   }
   getProducts();
+
+  const productSearchBar = document.querySelector("#product-search-bar");
+  const addProductModalBtn = document.querySelector("#addProductModalBtn");
+  const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
+  const productsTable = document.querySelector("#productsTable");
+  const saleBtn = document.querySelector("#saleBtn");
 
 
   //Open add product modal
@@ -83,7 +85,7 @@ const firebaseConfig = {
 
   //Open view product modal
   function openViewProduct(e){
-    
+
     const target = e.target
 
     if(target.classList.contains("viewProductModalBtn")){
@@ -96,6 +98,12 @@ const firebaseConfig = {
         }
       })
     }
+  }
+
+
+  //remove products
+  function removeProducts(){
+
   }
 
 
@@ -184,5 +192,6 @@ const firebaseConfig = {
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct);
-  saleBtn.addEventListener("click", openMakeSale)
+  saleBtn.addEventListener("click", openMakeSale);
+
 

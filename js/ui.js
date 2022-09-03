@@ -17,7 +17,7 @@ class UI {
             <td class="align-middle">${item.product_price}</td>
             <td class="align-middle">${item.product_quantity}</td>
             <td class="align-middle">${item.product_price * item.product_quantity}</td>
-            <td class="align-middle"><i class="fa fa-times" aria-hidden="true"></i></td>
+            <td class="align-middle"> <a href="#"> <i class="fa fa-times" aria-hidden="true"></i></a></td>
         </tr>
         `
         })
@@ -60,9 +60,14 @@ class UI {
 
           this.modalFirstEl.insertAdjacentHTML('beforebegin', alert)
           
-            setTimeout(() => {
+             
+        }else{
+          setTimeout(() => {
+            if(!alert){
               document.querySelector('.modal .alert').remove();
-            }, 2000) 
+            }
+            
+          }, 2000)
         }
     }
 
