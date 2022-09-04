@@ -38,8 +38,9 @@ const firebaseConfig = {
   const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
   const productsTable = document.querySelector("#productsTable");
   const saleBtn = document.querySelector("#saleBtn");
+  const purchaseBtn = document.querySelector("#purchaseBtn");
 
-
+  
   //Open add product modal
   function openAddProduct(){
 
@@ -162,6 +163,56 @@ const firebaseConfig = {
   }
 
 
+    //Open new purchase modal
+    function openMakePurchase(){
+      ui.openModal(modals.makePurchase, productsArray);
+  
+      const productSelect = document.querySelector('#productSelect');
+      const makePurchaseBtn = document.querySelector('#makePurchaseBtn');
+      const purchaseQtyInput =  document.querySelector('#pur_product_quantity');
+  
+      //Load product to select tag
+      ui.loadProducts(productsArray);
+  
+      //Make sale
+      makePurchaseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const selectedProductName = productSelect.value;
+        let currentQty;
+        const purchaseQty = parseInt(purchaseQtyInput.value);
+        let newQty;
+  
+        productsArray.forEach(product => {
+          if(selectedProductName === product.product_id){
+            currentQty = product.product_quantity;
+          }
+        });
+  
+        if(selectedProductName && purchaseQty){
+  
+          if(purchaseQty < 10000){
+            newQty = currentQty + purchaseQty;
+  
+            products.doc(selectedProductName).update({
+              product_quantity: newQty
+            });
+  
+            console.log(newQty);
+            makePurchaseBtn.setAttribute("data-dismiss", "modal")
+          }else{
+            ui.modalMessage('Maxiumum purchase limit is 10000');
+  
+          }
+          
+        }else{
+          ui.modalMessage('Please fill all the fields');
+        }
+      })  
+    }
+
+
+
+
   //search products
   function searchProducts(){
     const searchQuery = productSearchBar.value.toLowerCase()
@@ -198,7 +249,9 @@ const firebaseConfig = {
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct);
+  productsTable.addEventListener('click', removeProducts);
   saleBtn.addEventListener("click", openMakeSale);
-  productsTable.addEventListener('click', removeProducts)
+  purchaseBtn.addEventListener("click", openMakePurchase);
+
 
 

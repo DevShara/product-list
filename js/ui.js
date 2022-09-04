@@ -26,11 +26,7 @@ class UI {
     }
 
     openModal(template, view){ 
-        // const data = {
-        //     name : "Joe",
-        //     age: 36,
-        //     occupation : "Web Developer"  
-        // }
+       
         
            var output = Mustache.render(template, view);
            document.getElementById('modal-content').innerHTML = output;
