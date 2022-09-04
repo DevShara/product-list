@@ -1,10 +1,6 @@
 //init class ui
 const ui = new UI();
 
-
-
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyCQ9NyJtK2i6eFVucweVF5KszbuNCj0k7U",
     authDomain: "product-store-d83f7.firebaseapp.com",
@@ -102,8 +98,18 @@ const firebaseConfig = {
 
 
   //remove products
-  function removeProducts(){
-
+  function removeProducts(e){
+   
+    if(e.target.classList.contains('fa-times')){
+      // const prompt = prompt("Are you sure?");
+      if(confirm('Product will be permanently deleted')){
+        const productId = e.target.parentElement.parentElement.dataset.id;
+        products.doc(productId).delete()
+        .then(() => {
+          console.log('Succesfully deleted');
+        })
+      }
+    }
   }
 
 
@@ -193,5 +199,6 @@ const firebaseConfig = {
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct);
   saleBtn.addEventListener("click", openMakeSale);
+  productsTable.addEventListener('click', removeProducts)
 
 

@@ -17,7 +17,7 @@ class UI {
             <td class="align-middle">${item.product_price}</td>
             <td class="align-middle">${item.product_quantity}</td>
             <td class="align-middle">${item.product_price * item.product_quantity}</td>
-            <td class="align-middle"> <a href="#"> <i class="fa fa-times" aria-hidden="true"></i></a></td>
+            <td class="align-middle"><i class="fa fa-times" aria-hidden="true"></i></td>
         </tr>
         `
         })
