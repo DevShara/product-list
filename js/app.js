@@ -1,14 +1,6 @@
 //init class ui
 const ui = new UI();
 
-const productSearchBar = document.querySelector("#product-search-bar");
-const addProductModalBtn = document.querySelector("#addProductModalBtn");
-const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
-const productsTable = document.querySelector("#productsTable");
-const saleBtn = document.querySelector("#saleBtn");
-
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyCQ9NyJtK2i6eFVucweVF5KszbuNCj0k7U",
     authDomain: "product-store-d83f7.firebaseapp.com",
@@ -41,7 +33,14 @@ const firebaseConfig = {
   }
   getProducts();
 
+  const productSearchBar = document.querySelector("#product-search-bar");
+  const addProductModalBtn = document.querySelector("#addProductModalBtn");
+  const viewProductModalBtn = document.querySelector(".viewProductModalBtn");
+  const productsTable = document.querySelector("#productsTable");
+  const saleBtn = document.querySelector("#saleBtn");
+  const purchaseBtn = document.querySelector("#purchaseBtn");
 
+  
   //Open add product modal
   function openAddProduct(){
 
@@ -49,26 +48,41 @@ const firebaseConfig = {
     let addProductBtn = document.querySelector("#addProductBtn");
     let addProductForm = document.querySelector("#addProductForm");
 
-    //Add product
-    addProductBtn.addEventListener("click", () => {
-      const product = {}
+    
+      //Add product
+      addProductBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-      product.product_name = addProductForm.product_name.value.toLowerCase();
-      product.product_price = addProductForm.product_price.value;
-      product.product_quantity = parseInt(addProductForm.product_quantity.value);
-      product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
+        const productName = addProductForm.product_name.value;
+        const productPrice = addProductForm.product_price.value;
+        const productQuantity = addProductForm.product_quantity.value;
 
-      //Add data to products table in Firebase
-      products.add(product); 
+        if(productName.length > 0 && productPrice.length > 0 && productQuantity.length > 0){
+          
+          const product = {}
 
-    });
+          product.product_name = addProductForm.product_name.value.toLowerCase();
+          product.product_price = addProductForm.product_price.value;
+          product.product_quantity = parseInt(addProductForm.product_quantity.value);
+          product.product_tags = addProductForm.product_name.value.toLowerCase().split(" ")
+  
+          //Add data to products table in Firebase
+          products.add(product); 
 
+          addProductBtn.setAttribute("data-dismiss", "modal")
+         
+
+        }else{
+          ui.modalMessage("Please fill all the fields")
+        }
+      });
+   
   }
 
 
   //Open view product modal
   function openViewProduct(e){
-    
+
     const target = e.target
 
     if(target.classList.contains("viewProductModalBtn")){
@@ -80,6 +94,22 @@ const firebaseConfig = {
           ui.openModal(modals.viewProduct, product);
         }
       })
+    }
+  }
+
+
+  //remove products
+  function removeProducts(e){
+   
+    if(e.target.classList.contains('fa-times')){
+      // const prompt = prompt("Are you sure?");
+      if(confirm('Product will be permanently deleted')){
+        const productId = e.target.parentElement.parentElement.dataset.id;
+        products.doc(productId).delete()
+        .then(() => {
+          console.log('Succesfully deleted');
+        })
+      }
     }
   }
 
@@ -109,22 +139,78 @@ const firebaseConfig = {
         }
       });
 
-      if(currentQty > saleQty){
-        newQty = currentQty - saleQty;
-        console.log(newQty)
+      if(selectedProductName && saleQty.length > 0){
+
+        if(currentQty >= saleQty){
+          newQty = currentQty - saleQty;
+
+          products.doc(selectedProductName).update({
+            product_quantity: newQty
+          });
+
+          console.log(newQty);
+          makeSaleBtn.setAttribute("data-dismiss", "modal")
+        }else{
+          console.log('Product stock balance is not sufficient');
+          ui.modalMessage('Product stock balance is not sufficient');
+
+        }
+        
+      }else{
+        ui.modalMessage('Please fill all the fields');
       }
-      
-      products.doc(selectedProductName).update({
-        product_quantity: newQty
-      })
-      
-      // products.doc()
-
-    })
-
-
-    
+    })  
   }
+
+
+    //Open new purchase modal
+    function openMakePurchase(){
+      ui.openModal(modals.makePurchase, productsArray);
+  
+      const productSelect = document.querySelector('#productSelect');
+      const makePurchaseBtn = document.querySelector('#makePurchaseBtn');
+      const purchaseQtyInput =  document.querySelector('#pur_product_quantity');
+  
+      //Load product to select tag
+      ui.loadProducts(productsArray);
+  
+      //Make sale
+      makePurchaseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const selectedProductName = productSelect.value;
+        let currentQty;
+        const purchaseQty = parseInt(purchaseQtyInput.value);
+        let newQty;
+  
+        productsArray.forEach(product => {
+          if(selectedProductName === product.product_id){
+            currentQty = product.product_quantity;
+          }
+        });
+  
+        if(selectedProductName && purchaseQty){
+  
+          if(purchaseQty < 10000){
+            newQty = currentQty + purchaseQty;
+  
+            products.doc(selectedProductName).update({
+              product_quantity: newQty
+            });
+  
+            console.log(newQty);
+            makePurchaseBtn.setAttribute("data-dismiss", "modal")
+          }else{
+            ui.modalMessage('Maxiumum purchase limit is 10000');
+  
+          }
+          
+        }else{
+          ui.modalMessage('Please fill all the fields');
+        }
+      })  
+    }
+
+
 
 
   //search products
@@ -155,19 +241,17 @@ const firebaseConfig = {
 
     }
 
-
   }//searchProducts()
 
-
   //clear modal using jquery
-  $('#theModal').on('hidden.bs.modal', function () {
-    const modal = document.getElementById('modal-content');
-    modal.innerHTML = '';
-});
-
+  ui.closeModal();
 
   productSearchBar.addEventListener('keyup', searchProducts);
   addProductModalBtn.addEventListener("click", openAddProduct);
   productsTable.addEventListener("click", openViewProduct);
-  saleBtn.addEventListener("click", openMakeSale)
+  productsTable.addEventListener('click', removeProducts);
+  saleBtn.addEventListener("click", openMakeSale);
+  purchaseBtn.addEventListener("click", openMakePurchase);
+
+
 

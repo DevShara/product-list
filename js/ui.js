@@ -4,6 +4,7 @@ class UI {
         this.addProduct;
         this.data;
         this.productSelect;
+        this.modalFirstEl;
     }
 
     paintUI(products){
@@ -25,11 +26,7 @@ class UI {
     }
 
     openModal(template, view){ 
-        // const data = {
-        //     name : "Joe",
-        //     age: 36,
-        //     occupation : "Web Developer"  
-        // }
+       
         
            var output = Mustache.render(template, view);
            document.getElementById('modal-content').innerHTML = output;
@@ -48,5 +45,33 @@ class UI {
   
       productSelect.innerHTML = select;
     }
-    
+
+    modalMessage(msg){
+
+        this.modalFirstEl = document.querySelector('.modal-body').children[0];
+
+        if(!this.modalFirstEl.classList.contains('alert')){
+
+          const alert = `<div class="alert alert-danger" role="alert">${msg}</div>`
+
+          this.modalFirstEl.insertAdjacentHTML('beforebegin', alert)
+          
+             
+        }else{
+          setTimeout(() => {
+            if(!alert){
+              document.querySelector('.modal .alert').remove();
+            }
+            
+          }, 2000)
+        }
+    }
+
+    closeModal(){
+      $('#theModal').on('hidden.bs.modal', function () {
+        const modal = document.getElementById('modal-content');
+        modal.innerHTML = '';
+    });
+    }
+   
 }

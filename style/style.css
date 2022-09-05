@@ -18,3 +18,7 @@ body{
     text-transform: uppercase;
 }
 
+.fa.fa-times{
+    cursor: pointer;
+}
+
